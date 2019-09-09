@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 // import { graphql } from "gatsby"
 // import axios from "axios"
+import Camera from "react-html5-camera-photo"
+import "react-html5-camera-photo/build/css/index.css"
 import * as faceapi from "face-api.js"
 import Header from "../components/header"
 class HeadCount extends Component {
@@ -37,9 +39,45 @@ class HeadCount extends Component {
     console.log("input", input)
     console.log("fullFaceDescriptions", fullFaceDescriptions)
   }
+  onTakePhoto(dataUri) {
+    // Do stuff with the dataUri photo...
+    console.log("takePhoto")
+    this.setState({
+      dataUri,
+    })
+    setTimeout(() => {
+      this.handleCameraClick()
+    }, 300)
+  }
+  handleCameraClick = () => {
+    let imageToProcess = document.getElementById("imageToProcess")
+    this.setState({
+      imageUrl: null,
+      imageProcessingStage: "image_processing",
+      imageToProcess,
+    })
+    console.log(this.state.imageProcessingStage)
+    let that = this
+
+    console.log("imageToProcess", imageToProcess)
+    async function f() {
+      // const analysisImage = await faceapi.bufferToImage(
+      //   that.state.imageToProcess
+      // )
+      console.log("analysisImage", that.state.imageToProcess)
+      const detections = await faceapi.detectAllFaces(that.state.imageToProcess)
+      console.log("Number of people in image " + detections.length)
+      that.setState({
+        numberOfPeople: detections.length,
+        imageProcessingStage: "image_processing_complete",
+      })
+    }
+    f()
+  }
   handleChange = event => {
     let tmpAddress = URL.createObjectURL(event.target.files[0])
     this.setState({
+      dataUri: null,
       imageUrl: tmpAddress,
       imageProcessingStage: "image_processing",
     })
@@ -75,9 +113,19 @@ class HeadCount extends Component {
               flexDirection: "column",
             }}
           >
+            <Camera
+              onTakePhoto={dataUri => {
+                this.onTakePhoto(dataUri)
+              }}
+            />
             <h1>Upload picture of students</h1>
             <div className="App"></div>
-            <img src={this.state.imageUrl} heigth="200" width="400" />
+            <img
+              src={this.state.imageUrl || this.state.dataUri}
+              heigth="200"
+              width="400"
+              id="imageToProcess"
+            />
             <input type="file" id="imageUpload" onChange={this.handleChange} />
             <br />
             {this.state.imageProcessingStage == "image_processing_complete" && (
@@ -85,7 +133,7 @@ class HeadCount extends Component {
             )}
             {this.state.imageProcessingStage == "image_processing" && (
               <div>
-                <h1> Processing the image... </h1>
+                <h1 id="showImageStatusHere"> Processing the image... </h1>
               </div>
             )}
           </div>
