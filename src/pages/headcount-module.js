@@ -1,6 +1,5 @@
 import React, { Component } from "react"
-// import { graphql } from "gatsby"
-// import axios from "axios"
+
 import Camera from "react-html5-camera-photo"
 import "react-html5-camera-photo/build/css/index.css"
 import * as faceapi from "face-api.js"
