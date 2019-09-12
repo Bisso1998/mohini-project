@@ -18,11 +18,9 @@ class HeadCount extends Component {
   }
 
   componentDidMount() {
-    Promise.all([
-      faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-      faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-      faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
-    ]).then(this.start)
+    Promise.all([faceapi.nets.ssdMobilenetv1.loadFromUri("/models")]).then(
+      this.start
+    )
   }
 
   start = () => {

@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "face-api.js": "^0.20.1",
+    "fs": "0.0.1-security",
     "gatsby": "^2.15.9",
     "gatsby-image": "^2.2.17",
     "gatsby-plugin-manifest": "^2.2.14",
@@ -14,11 +15,15 @@
     "gatsby-plugin-sharp": "^2.2.20",
     "gatsby-source-filesystem": "^2.1.21",
     "gatsby-transformer-sharp": "^2.2.13",
+    "instascan": "^1.0.0",
+    "instascan-umd": "^1.0.1",
     "prop-types": "^15.7.2",
+    "qr-scanner": "^1.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1",
     "react-html5-camera-photo": "^1.4.3",
+    "react-instascan": "^1.0.0",
     "react-qr-reader": "^2.2.1"
   },
   "devDependencies": {
