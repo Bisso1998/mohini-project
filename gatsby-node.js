@@ -15,6 +15,10 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
             test: /react-qr-reader/,
             use: loaders.null(),
           },
+          {
+            test: /firebase/,
+            use: loaders.null(),
+          },
         ],
       },
     })
