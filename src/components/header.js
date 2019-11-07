@@ -1,42 +1,40 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React from "react"
+import React, { Component } from "react"
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ marginLeft: " -100px " }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          QR Code Attendance App
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: "Default",
+    }
+  }
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+  componentDidMount() {}
 
-Header.defaultProps = {
-  siteTitle: ``,
+  render() {
+    return (
+      <header
+        style={{
+          background: `rebeccapurple`,
+        }}
+      >
+        <div>
+          <h1>
+            <Link
+              to="/"
+              style={{
+                color: `white`,
+                textDecoration: `none`,
+              }}
+            >
+              {this.props.title}
+            </Link>
+          </h1>
+        </div>
+      </header>
+    )
+  }
 }
 
 export default Header

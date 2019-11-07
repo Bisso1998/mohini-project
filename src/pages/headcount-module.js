@@ -1,4 +1,6 @@
 import React, { Component } from "react"
+import AttendanceDb from "../components/attendance-track-from-db.js"
+import { Button, Container, Row, Col } from "reactstrap"
 
 import Camera from "react-html5-camera-photo"
 import "react-html5-camera-photo/build/css/index.css"
@@ -61,13 +63,14 @@ class HeadCount extends Component {
       // const analysisImage = await faceapi.bufferToImage(
       //   that.state.imageToProcess
       // )
-      console.log("analysisImage", that.state.imageToProcess)
       const detections = await faceapi.detectAllFaces(that.state.imageToProcess)
       console.log("Number of people in image " + detections.length)
       that.setState({
         numberOfPeople: detections.length,
         imageProcessingStage: "image_processing_complete",
       })
+
+      localStorage.setItem("studentCountFromImage", detections.length)
     }
     f()
   }
@@ -90,6 +93,7 @@ class HeadCount extends Component {
         numberOfPeople: detections.length,
         imageProcessingStage: "image_processing_complete",
       })
+      localStorage.setItem("studentCountFromImage", that.state.numberOfPeople)
     }
     f()
   }
@@ -97,59 +101,60 @@ class HeadCount extends Component {
   render() {
     return (
       <div>
-        {this.state.isModuleLoaded && (
-          <div
-            style={{
-              margin: "0px",
-              padding: "0px",
-              width: "100vw",
-              height: "100vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Camera
-              onTakePhoto={dataUri => {
-                this.onTakePhoto(dataUri)
-              }}
-            />
-            <h1>Upload picture of students</h1>
-            <div className="App"></div>
-            <img
-              src={this.state.imageUrl || this.state.dataUri}
-              heigth="200"
-              width="400"
-              id="imageToProcess"
-            />
-            <input type="file" id="imageUpload" onChange={this.handleChange} />
-            <br />
-            {this.state.imageProcessingStage == "image_processing_complete" && (
-              <h1> Number of people detected {this.state.numberOfPeople} </h1>
-            )}
-            {this.state.imageProcessingStage == "image_processing" && (
-              <div>
-                <h1 id="showImageStatusHere"> Processing the image... </h1>
+        <Header title="Teacher's Dashboard" />
+        <Row>
+          <Col>
+            {this.state.isModuleLoaded && (
+              <div style={{}}>
+                <img
+                  src={this.state.imageUrl || this.state.dataUri}
+                  heigth="200"
+                  width="400"
+                  id="imageToProcess"
+                  style={{
+                    display: "block",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    width: "50%",
+                  }}
+                />
+                {this.state.imageProcessingStage ==
+                  "image_processing_complete" && (
+                  <h1 style={{ textAlign: "center" }}>
+                    {" "}
+                    Number of people detected {this.state.numberOfPeople}{" "}
+                  </h1>
+                )}
+                <b> Upload a picture or click real time pictures.</b>
+                <input
+                  type="file"
+                  id="imageUpload"
+                  onChange={this.handleChange}
+                />
+                <Camera
+                  onTakePhoto={dataUri => {
+                    this.onTakePhoto(dataUri)
+                  }}
+                />
+                <div className="App"></div>
+                {this.state.imageProcessingStage == "image_processing" && (
+                  <div>
+                    <h1 id="showImageStatusHere"> Processing the image... </h1>
+                  </div>
+                )}
               </div>
             )}
-          </div>
-        )}
-        {!this.state.isModuleLoaded && (
-          <img
-            style={{
-              margin: "0px",
-              padding: "0px",
-              display: "flex",
-              height: "100vh",
-              width: "100vw",
-
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            src="https://www.downgraf.com/wp-content/uploads/2019/05/Loader-animation-principle-freebie.gif"
-          />
-        )}
+            {!this.state.isModuleLoaded && (
+              <img
+                style={{}}
+                src="https://www.downgraf.com/wp-content/uploads/2019/05/Loader-animation-principle-freebie.gif"
+              />
+            )}
+          </Col>
+          <Col>
+            <AttendanceDb />
+          </Col>
+        </Row>
       </div>
     )
   }
