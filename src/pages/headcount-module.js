@@ -101,7 +101,7 @@ class HeadCount extends Component {
   render() {
     return (
       <div>
-        <Header title="Teacher's Dashboard" />
+        <Header title="Teacher's Dashboards" />
         <Row>
           <Col>
             {this.state.isModuleLoaded && (
@@ -125,7 +125,7 @@ class HeadCount extends Component {
                     Number of people detected {this.state.numberOfPeople}{" "}
                   </h1>
                 )}
-                <b> Upload a picture or click real time pictures.</b>
+                <b> Upload a picture or click real time picture.</b>
                 <input
                   type="file"
                   id="imageUpload"

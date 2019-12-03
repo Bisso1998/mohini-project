@@ -25,8 +25,9 @@ class AttendanceDb extends Component {
     if (imageCount == studentCount) {
       this.setState({
         verifyResult:
-          "Attendance matched and saved! Total count it: " + imageCount,
+          "Attendance matched and saved! Total count is: " + imageCount,
       })
+      alert("Attendance matched!")
     } else {
       alert("Attendance mismatch! Please mark attendance manually.")
       window.open("https://ums.lpu.in")
@@ -84,15 +85,15 @@ class AttendanceDb extends Component {
         </Button>
         &nbsp;&nbsp;&nbsp;
         <Button color="warning" style={{ color: "white" }}>
-          <a href="/scan" target="_BLANK" style={{ color: "white" }}>
-            Scan
+          <a href="/" style={{ color: "white" }}>
+            LogOut
           </a>
         </Button>
         &nbsp;&nbsp;&nbsp;
         <div>
           <table>
             <tr>
-              <th>Serial Number</th>
+              <th>Serial Numbers</th>
               <th>Name</th>
               <th>Registration Number</th>
             </tr>
